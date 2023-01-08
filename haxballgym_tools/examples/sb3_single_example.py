@@ -1,32 +1,28 @@
-from haxballgym import make, Game
-from haxballgym import common_values as cv
-from haxballgym.gym import Gym
+import logging
 
-from haxballgym.utils.terminal_conditions import common_conditions
+import numpy as np
+from haxballgym import make
+from haxballgym.gym import Gym
+from haxballgym.utils.action_parsers import DefaultAction
+from haxballgym.utils.obs_builders import DefaultObs
 from haxballgym.utils.reward_functions import (
     CombinedReward,
     velocity_reward,
 )
-from haxballgym.utils.obs_builders import DefaultObs
-from haxballgym.utils.action_parsers import DefaultAction
-
-import logging
-import numpy as np
-
+from haxballgym.utils.terminal_conditions import common_conditions
+from haxballgym_tools.sb3_utils import SB3SingleInstanceEnv
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import CheckpointCallback
-from stable_baselines3.common.vec_env import VecMonitor, VecNormalize, VecCheckNan
-from haxballgym_tools.sb3_utils import SB3SingleInstanceEnv
+from stable_baselines3.common.vec_env import VecCheckNan, VecMonitor, VecNormalize
+from ursinaxball import Game
+from ursinaxball import common_values as cv
 
 frame_skip = 10
 half_life_seconds = 5
 
 
 def recording_condition(gym_env: Gym) -> bool:
-    # Returns whether the game should be recorded or not
-    # Change the condition if you find that too many games are being recorded
     game = gym_env._match._game
-    # Current condition: If a goal has been scored and the time is more than 10 seconds
     if game.score.red + game.score.blue > 0 and game.score.time > 10:
         return True
 
@@ -35,9 +31,11 @@ def recording_condition(gym_env: Gym) -> bool:
 
 def create_gym_env():
     game = Game(
-        stadium_file=cv.MAP_CLASSIC,
+        stadium_file=cv.BaseMap.CLASSIC,
         folder_rec="./recordings/",
         logging_level=logging.DEBUG,
+        enable_renderer=True,
+        enable_vsync=False,
     )
     gym_env = make(
         game=game,
@@ -55,7 +53,7 @@ def create_gym_env():
         ),
         obs_builder=DefaultObs(),
         action_parser=DefaultAction(),
-        team_size=1,
+        team_size=2,
         tick_skip=frame_skip,
     )
     return gym_env
@@ -66,15 +64,14 @@ gym_env = create_gym_env()
 fps = 60 / frame_skip
 gamma = np.exp(np.log(0.5) / (fps * half_life_seconds))
 
-# wrap the RLGym environment with the single instance wrapper
-env = SB3SingleInstanceEnv(gym_env, recording_condition)
+env = SB3SingleInstanceEnv(env=gym_env, recording_condition=recording_condition)
 env = VecCheckNan(env)
 env = VecMonitor(env)
 env = VecNormalize(env, norm_obs=False, gamma=gamma)
 
-# Save a checkpoint every 10000 steps
+# Save a checkpoint every 20000 steps
 checkpoint_callback = CheckpointCallback(
-    save_freq=50_000 / env.num_envs, save_path="./logs/", name_prefix="hax_model_simple"
+    save_freq=20_000 / env.num_envs, save_path="./logs/", name_prefix="hax_simple"
 )
 
 # create a PPO instance and start learning
@@ -95,11 +92,12 @@ model = PPO(
 
 model.learn(100_000_000, callback=checkpoint_callback)
 
-# load a PPO instance and continue learning
 # model = PPO.load(
 #     "logs/model_file.zip",
 #     env,
-#     custom_objects=dict(n_envs=env.num_envs, _last_obs=None),  # Number of agents
+#     custom_objects=dict(
+#         n_envs=env.num_envs, _last_obs=None
+#     ),  # Need this to change number of agents
 #     device="auto",  # Need to set device again (if using a specific one)
 # )
 # env.reset()  # Important when loading models, SB3 does not do this for you

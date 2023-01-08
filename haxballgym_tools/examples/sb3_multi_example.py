@@ -1,23 +1,20 @@
-from haxballgym import make, Game
-from haxballgym import common_values as cv
+import logging
 
-from haxballgym.utils.terminal_conditions import common_conditions
+import numpy as np
+from haxballgym import make
+from haxballgym.utils.action_parsers import DefaultAction
+from haxballgym.utils.obs_builders import DefaultObs
 from haxballgym.utils.reward_functions import (
-    common_rewards,
     CombinedReward,
     velocity_reward,
 )
-from haxballgym.utils.obs_builders import DefaultObs
-
-from haxballgym.utils.action_parsers import DefaultAction
-
-import logging
-import numpy as np
-
+from haxballgym.utils.terminal_conditions import common_conditions
+from haxballgym_tools.sb3_utils import SB3MultipleInstanceEnv
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import CheckpointCallback
-from haxballgym_tools.sb3_utils import SB3MultipleInstanceEnv
-from stable_baselines3.common.vec_env import VecMonitor, VecNormalize, VecCheckNan
+from stable_baselines3.common.vec_env import VecCheckNan, VecMonitor, VecNormalize
+from ursinaxball import Game
+from ursinaxball import common_values as cv
 
 if __name__ == "__main__":
     frame_skip = 10
@@ -25,17 +22,16 @@ if __name__ == "__main__":
 
     def create_gym_env():
         game = Game(
-            stadium_file=cv.MAP_CLASSIC,
-            folder_rec="recordings/",
+            stadium_file=cv.BaseMap.CLASSIC,
             logging_level=logging.DEBUG,
+            enable_renderer=True,
+            enable_vsync=False,
+            enable_recorder=False,
         )
         gym_env = make(
             game=game,
             reward_fn=CombinedReward(
                 (
-                    common_rewards.EventReward(
-                        team_goal=1, team_concede=-1, touch=0.01, kick=0.1
-                    ),
                     velocity_reward.VelocityPlayerToBallReward(),
                     velocity_reward.VelocityBallToGoalReward(
                         stadium=game.stadium_store, own_goal=False
@@ -48,17 +44,16 @@ if __name__ == "__main__":
             ),
             obs_builder=DefaultObs(),
             action_parser=DefaultAction(),
-            team_size=1,
+            team_size=2,
             tick_skip=frame_skip,
         )
         return gym_env._match
 
-    gym_env = [create_gym_env() for _ in range(8)]
+    gym_env = [create_gym_env() for _ in range(4)]
 
     fps = 60 / frame_skip
     gamma = np.exp(np.log(0.5) / (fps * half_life_seconds))
 
-    # wrap the RLGym environment with the single instance wrapper
     env = SB3MultipleInstanceEnv(gym_env)
     env = VecCheckNan(env)
     env = VecMonitor(env)
@@ -68,7 +63,7 @@ if __name__ == "__main__":
     checkpoint_callback = CheckpointCallback(
         save_freq=50_000 / env.num_envs,
         save_path="logs/",
-        name_prefix="hax_model_multi",
+        name_prefix="hax_multi",
     )
 
     # create a PPO instance and start learning
@@ -90,7 +85,7 @@ if __name__ == "__main__":
     model.learn(100_000_000, callback=checkpoint_callback)
 
     # model = PPO.load(
-    #     "logs/hax_model_single_38000000_steps.zip",
+    #     "logs/model_file.zip",
     #     env,
     #     custom_objects=dict(
     #         n_envs=env.num_envs, _last_obs=None
