@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "haxballgym-tools"
+version = "1.0.2"
+description = ""
+authors = ["Wazarr <jeje_04@live.com>"]
+readme = "README.md"
+packages = [{include = "haxballgym_tools"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+psutil = "^5.9.4"
+stable-baselines3 = "^1.6.2"
+haxballgym = "^0.4.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
