@@ -94,7 +94,7 @@ env = VecMonitor(env)
 env = VecNormalize(env, norm_obs=False, gamma=gamma)
 
 model = PPO.load(
-    "logs/multi_52700000_steps.zip",
+    "logs/model.zip",
     env,
     custom_objects=dict(n_envs=env.num_envs, _last_obs=None),
     device="auto",
