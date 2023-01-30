@@ -1,4 +1,4 @@
-# rlgym-tools
+# HaxBallGym-tools
 
 Extra tools for HaxballGym.
 
