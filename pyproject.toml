@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "haxballgym-tools"
-version = "1.0.2"
+version = "1.0.3"
 description = ""
 authors = ["Wazarr <jeje_04@live.com>"]
 readme = "README.md"
