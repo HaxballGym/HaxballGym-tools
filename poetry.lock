@@ -440,20 +440,20 @@ toy-text = ["scipy (>=1.4.1)"]
 
 [[package]]
 name = "haxballgym"
-version = "0.5.4"
+version = "0.5.5"
 description = "HaxBallGym is a python package that can be used to treat the game HaxBall as though it were an OpenAI-style environment for Reinforcement Learning projects."
 category = "main"
 optional = false
 python-versions = ">=3.10,<3.12"
 files = [
-    {file = "haxballgym-0.5.4-py3-none-any.whl", hash = "sha256:b81fbabede192a757e7cb402275ab842f8299c38f9ce166d74e04a665b934a86"},
-    {file = "haxballgym-0.5.4.tar.gz", hash = "sha256:fd7991134021241550b91c68e2627aeac9fa79c864bd4029b7f0e5ead5bae148"},
+    {file = "haxballgym-0.5.5-py3-none-any.whl", hash = "sha256:bb223249b2901abbf451ff80106e098a2fbda049cf690e2591c23b9da4f9d65e"},
+    {file = "haxballgym-0.5.5.tar.gz", hash = "sha256:25386d2a19318cc7c198a7425b7aa3e602dd79e92e54ed1d1eb5d22ca51e69a2"},
 ]
 
 [package.dependencies]
 gym = "0.21.0"
 numpy = ">=1.23.5,<2.0.0"
-ursinaxball = "0.2.2"
+ursinaxball = "0.2.3"
 
 [[package]]
 name = "idna"
@@ -1700,14 +1700,14 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "ursina"
-version = "5.2.0"
+version = "5.0.0"
 description = "An easy to use game engine/framework for python."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "ursina-5.2.0-py3-none-any.whl", hash = "sha256:7718b31b0b827a3e2dedb4e2381be5f5ec5c03f1bb25676ba4593dcd07672552"},
-    {file = "ursina-5.2.0.tar.gz", hash = "sha256:090fc35858c5fc64bf898fd0d9449d43552b405b696088a0247c10ac643f581e"},
+    {file = "ursina-5.0.0-py3-none-any.whl", hash = "sha256:6435e09d0e4e18e802e87fb24169867206890351d7496a719f90f7c6f8669ee0"},
+    {file = "ursina-5.0.0.tar.gz", hash = "sha256:3916d564bc6833645031205939701af722a573725436ee6c939351adb1d0fa06"},
 ]
 
 [package.dependencies]
@@ -1715,21 +1715,20 @@ panda3d = "*"
 panda3d-gltf = "*"
 pillow = "*"
 pyperclip = "*"
-Xlib = {version = "*", markers = "platform_system == \"Linux\""}
 
 [package.extras]
 extras = ["imageio", "numpy", "psd-tools3", "psutil"]
 
 [[package]]
 name = "ursinaxball"
-version = "0.2.2"
+version = "0.2.3"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.10,<3.12"
 files = [
-    {file = "ursinaxball-0.2.2-py3-none-any.whl", hash = "sha256:336a238247447cbb3d278a0205c6588843481abd0ebdafdc453f1b05b412b777"},
-    {file = "ursinaxball-0.2.2.tar.gz", hash = "sha256:22a65a38c100796ad951da63829219d51481a746234a66fb19afc7f22a0aa296"},
+    {file = "ursinaxball-0.2.3-py3-none-any.whl", hash = "sha256:ccf381d924d6b707978c64a4aaf7c93f396bbe0e3df283ce4ae436585c13f3f5"},
+    {file = "ursinaxball-0.2.3.tar.gz", hash = "sha256:9d7c94f1953f07ed53411f5f510f5b7778e35839c10bf6dc97fedb560ee348a7"},
 ]
 
 [package.dependencies]
@@ -1739,7 +1738,7 @@ numpy = ">=1.23.5,<2.0.0"
 panda3d = "1.10.13"
 scipy = ">=1.10.0,<2.0.0"
 screeninfo = ">=0.8.1,<0.9.0"
-ursina = "5.2.0"
+ursina = "5.0.0"
 
 [[package]]
 name = "werkzeug"
@@ -1775,21 +1774,6 @@ files = [
 test = ["pytest (>=3.0.0)"]
 
 [[package]]
-name = "xlib"
-version = "0.21"
-description = "Python X Library"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "xlib-0.21-py2.py3-none-any.whl", hash = "sha256:8eee67dad83ef4b82bbbfa85d51eeb20c79d12b119fe25aa1d27bd602ff82212"},
-    {file = "xlib-0.21.tar.gz", hash = "sha256:60b7cd5d90f5d5922d9ce27b61589c07d970796558d417461db7b66e366bc401"},
-]
-
-[package.dependencies]
-six = ">=1.10.0"
-
-[[package]]
 name = "zipp"
 version = "3.12.1"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -1808,4 +1792,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "46dbc2f573132915258d2b3dba2172280641d8c27b632d6768d6fd05f14cd44e"
+content-hash = "615822b2c352c1393f0f329b24a9cea214f45775ed4b013ab2d2a6c4a7076057"
