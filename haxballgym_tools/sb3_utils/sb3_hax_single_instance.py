@@ -44,6 +44,9 @@ class SB3SingleInstanceEnv(VecEnv):
         return np.asarray(observations)
 
     def step_async(self, actions: np.ndarray) -> None:
+        if len(np.shape(actions)) == 1:
+            actions = [actions]
+
         if self.env._match._bots is not None:
             match_env = self.env._match
             n_agents = match_env.agents

@@ -8,7 +8,7 @@ packages = [{ include = "haxballgym_tools" }]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
-haxballgym = "0.5.2"
+haxballgym = "0.5.3"
 psutil = "^5.9.4"
 stable-baselines3 = "^1.6.2"
 tensorboard = "^2.11.2"
