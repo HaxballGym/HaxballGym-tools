@@ -440,14 +440,14 @@ toy-text = ["scipy (>=1.4.1)"]
 
 [[package]]
 name = "haxballgym"
-version = "0.5.3"
+version = "0.5.4"
 description = "HaxBallGym is a python package that can be used to treat the game HaxBall as though it were an OpenAI-style environment for Reinforcement Learning projects."
 category = "main"
 optional = false
 python-versions = ">=3.10,<3.12"
 files = [
-    {file = "haxballgym-0.5.3-py3-none-any.whl", hash = "sha256:03dba51a686b06c84f9ea6e0a554fc7fc8fd93bb6f1f3f74b153ab786f3ec41d"},
-    {file = "haxballgym-0.5.3.tar.gz", hash = "sha256:90624a3ba9ca677607c4a1db5ca3a28eb8f7b117b9190cdb2cbce0c538247a85"},
+    {file = "haxballgym-0.5.4-py3-none-any.whl", hash = "sha256:b81fbabede192a757e7cb402275ab842f8299c38f9ce166d74e04a665b934a86"},
+    {file = "haxballgym-0.5.4.tar.gz", hash = "sha256:fd7991134021241550b91c68e2627aeac9fa79c864bd4029b7f0e5ead5bae148"},
 ]
 
 [package.dependencies]
@@ -1808,4 +1808,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "6d3e08d79b058bbf859cb745ef6d2225f7b282f6f45d3994fd2c99a490b0eb0e"
+content-hash = "46dbc2f573132915258d2b3dba2172280641d8c27b632d6768d6fd05f14cd44e"
