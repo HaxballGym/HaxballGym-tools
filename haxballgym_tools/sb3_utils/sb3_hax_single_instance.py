@@ -47,21 +47,7 @@ class SB3SingleInstanceEnv(VecEnv):
         if len(np.shape(actions)) == 1:
             actions = [actions]
 
-        if self.env._match._bots is not None:
-            match_env = self.env._match
-            n_agents = match_env.agents
-            game_env = match_env._game
-            actions_bots = [p.step(game_env) for p in game_env.players][n_agents:]
-            parsed_action_bots = []
-            for act_bot in actions_bots:
-                parsed_act = [act_bot[0] + 1, act_bot[1] + 1, act_bot[2]]
-                parsed_action_bots.append(parsed_act)
-
-            # The first action will always be the non bots
-            actions_final = np.concatenate((actions, parsed_action_bots))
-            self.step_result = self.env.step(actions_final)
-        else:
-            self.step_result = self.env.step(actions)
+        self.step_result = self.env.step(actions)
 
     def step_wait(self) -> VecEnvStepReturn:
         observations, rewards, done, info = self.step_result

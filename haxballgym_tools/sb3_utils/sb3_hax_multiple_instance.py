@@ -120,8 +120,13 @@ class SB3MultipleInstanceEnv(SubprocVecEnv):
     def step_async(self, actions: np.ndarray) -> None:
         i = 0
         for remote, n_agents in zip(self.remotes, self.n_agents_per_env):
-            remote.send(("step", actions[i : i + n_agents, :]))
+            actions_remote = actions[i : i + n_agents, :]
+            if len(np.shape(actions_remote)) == 1:
+                actions_remote = [actions_remote]
+
+            remote.send(("step", actions_remote))
             i += n_agents
+
         self.waiting = True
 
     def step_wait(self) -> VecEnvStepReturn:
